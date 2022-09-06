@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {disconnectWifi, getWifiList, getWifiStatus, scanWifi, setConnectWifi} from "../http/api"
+import {add_ws_eventHandler, disconnectWifi, getWifiList, getWifiStatus, scanWifi, setConnectWifi} from "../http/api"
 import {reactive, ref} from 'vue'
 import {connectUrl, mqttTool, options} from "../mqttTool/mqttTool";
 import {Wifi} from "../type";
@@ -12,20 +12,22 @@ import {Wifi} from "../type";
 // mqttTool.publish('/vue','he')
 
 // setWifi("gy的iPhone","12345678");
+
 const wifiList = reactive<Wifi[]>([]);
 const loading = ref(false);
 
 async function searchWifi() {
-  wifiList.length = 0;
   loading.value = true
   scanWifi();
-  let resData = await getWifiList();
-  while (resData.totle < 0) {
-    resData = await getWifiList();
-  }
-  wifiList.push(...resData.wifi);
-  loading.value = false
 }
+
+add_ws_eventHandler("search", (state: string, data: { totle: number, wifi: Wifi[] }) => {
+  wifiList.push(...data.wifi)
+  loading.value = false
+  setTimeout(() => {
+    loading.value = false
+  }, 9000);
+})
 
 
 const showModal = ref(false)
@@ -41,12 +43,14 @@ function connectWifi(name: string, needPwd: boolean) {
 }
 
 function connect() {
-  setConnectWifi("CQUPT-2.4G", "12345678")
+  setConnectWifi(selWifi.name, selWifi.pwd)
 }
 
 function disconnect() {
   disconnectWifi()
 }
+
+
 </script>
 
 <template>
