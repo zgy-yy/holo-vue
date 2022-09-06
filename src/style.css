@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+body {
+  font-size: 14px;
+  font-family: "Microsoft Yahei", "sans-serif";
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+  /* 清楚点击高亮效果 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:hover {
+  color: #333;
+}
+
+input[type="text"],
+input[type="search"] {
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+}
+
+
+/* 公用样式 */
+.f_left {
+  float: left;
+}
+
+.f_right {
+  float: right;
+}
+
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: block;
+  visibility: hidden;
+  height: 0;
+  line-height: 0;
+  clear: both;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.mr10 {
+  margin-right: 10px;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.container {
+  width: 100%;
+  max-width: 640px;
+  min-width: 320px;
+  margin: 0 auto;
+}
